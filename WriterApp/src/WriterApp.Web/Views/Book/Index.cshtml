@@ -1,0 +1,76 @@
+﻿@model WriterApp.Web.ViewModel.BookListViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h2>Books</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by caption: <input type="text" name="SearchString" value="@Model.Filter" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-currentFilter="@Model.Filter" asp-route-direction="@((Model.Order.Direction == "ASC" && Model.Order.Column == "caption") ? "DESC" : "ASC")" asp-route-sortOrder="caption">Caption</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-currentFilter="@Model.Filter" asp-route-direction="@((Model.Order.Direction == "ASC" && Model.Order.Column == "date") ? "DESC" : "ASC")" asp-route-sortOrder="date">PublishedDate</a>
+            </th>
+            <th>
+                <span>Authors</span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Caption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishedDate)
+                </td>
+                <td>
+                    <span>@string.Join(", ", item.Writers.Select(x => x.FullName))</span>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@Model.Order.Column"
+   asp-route-page="@(Model.Page - 1)"
+   asp-route-currentFilter="@Model.Filter"
+   asp-route-orderBy="@Model.Order.Direction"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@Model.Order.Column"
+   asp-route-page="@(Model.Page + 1)"
+   asp-route-currentFilter="@Model.Filter"
+   asp-route-orderBy="@Model.Order.Direction"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

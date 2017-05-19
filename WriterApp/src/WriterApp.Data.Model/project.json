@@ -1,0 +1,20 @@
+﻿{
+  "version": "1.0.0-*",
+  "ConnectionStrings": {
+    "WriterDb": "Server=OLEG-PC;Database=writer_db;Trusted_Connection=True;"
+  },
+  "dependencies": {
+    "NETStandard.Library": "1.6.1",
+    "Microsoft.EntityFrameworkCore": "1.1.2",
+    "Microsoft.EntityFrameworkCore.Design": "1.1.2",
+    "Microsoft.EntityFrameworkCore.Relational": "1.1.2",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.1"
+    
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<form (submit)="onSubmitForm()" *ngIf="model">
+    <div class="form-group">
+        <label for="firstName">First name</label>
+        <input [(ngModel)]="model.firstName" name="firstName" type="test" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last name:</label>
+        <input [(ngModel)]="model.lastName" name="lastName" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="dateOfBirth">Date of birth:</label>
+        <input [(ngModel)]="model.dateOfBirth" name="dateOfBirth" type="date" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="biography">Biography:</label>
+        <textarea [(ngModel)]="model.biography" type="text" class="form-control" name="biography"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>

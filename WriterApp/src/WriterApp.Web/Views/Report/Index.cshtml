@@ -1,0 +1,75 @@
+﻿@model WriterApp.Web.ViewModel.ReportListViewModel
+@{
+    ViewData["Title"] = "Report Page";
+}
+<h2>Reports</h2>
+
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by fullname name: <input type="text" name="SearchString" value="@Model.Filter" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-currentFilter="@Model.Filter" asp-route-direction="@((Model.Order.Direction == "ASC" && Model.Order.Column == "fullName") ? "DESC" : "ASC")" asp-route-sortOrder="fullName">Fullname</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-currentFilter="@Model.Filter" asp-route-direction="@((Model.Order.Direction == "ASC" && Model.Order.Column == "numberOfBooks") ? "DESC" : "ASC")" asp-route-sortOrder="numberOfBooks">Number of books</a>
+            </th>
+            <th>
+                <span>First book</span>
+            </th>
+            <th>
+                <span>Last book</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @item.NumberOfBooks
+                </td>
+                <td>
+                    @item.FirstBook
+                </td>
+                <td>
+                    @item.LastBook
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@Model.Order.Column"
+   asp-route-page="@(Model.Page - 1)"
+   asp-route-currentFilter="@Model.Filter"
+   asp-route-orderBy="@Model.Order.Direction"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@Model.Order.Column"
+   asp-route-page="@(Model.Page + 1)"
+   asp-route-currentFilter="@Model.Filter"
+   asp-route-orderBy="@Model.Order.Direction"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

@@ -1,0 +1,46 @@
+<a [routerLink]="['../', 'add']">Add writer</a>
+
+<div class="customer-list">
+    <div class="customer-list-container container">
+        <div class="customer-list-table ">
+            <table class="table table-striped">
+                <thead class="table-header">
+                    <th class="table-cell table-name" (click)="Sort('fullName');">Full Name</th>
+                    <th class="table-cell table-date" (click)="Sort('date');">Birthdate</th>
+                    <th class="table-cell table-status">Biography</th>
+                </thead>
+                <tbody class="table-row" *ngFor="let customer of model?.writerModel">
+                    <tr>
+
+                        <td>{{customer?.fullName}}</td>
+                        <td>{{customer?.dateOfBirth}}</td>
+                        <td>{{customer?.biography}}</td>
+                        <a [routerLink]="['../', customer.id, 'edit']">Edit</a>|
+                        <a (click)="delete(customer.id)">Delete</a>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="display:inline-block;">
+        <ul *ngIf="pager?.pages && pager?.pages?.length" class="pagination">
+            <li [ngClass]="{disabled:pager?.currentPage === 1}">
+                <a (click)="_setPage(1)">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager?.currentPage === 1}">
+                <a (click)="_setPage(pager?.currentPage - 1)">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager?.currentPage === page}">
+                <a (click)="_setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === model?.totalPage}">
+                <a (click)="_setPage(pager.currentPage + 1)">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager?.currentPage === model?.totalPage}">
+                <a (click)="_setPage(model?.totalPage)">Last</a>
+            </li>
+        </ul>
+    </div>
+</div>
